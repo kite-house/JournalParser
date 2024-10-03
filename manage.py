@@ -55,7 +55,7 @@ async def auth(message: types.Message):
         await message.reply("Для прохождение регистрации, перейдите в личные сообщение со мной!")
         return
     try:
-        response = registration(message.from_user.id, message.text.split(' ')[1], message.text.split(' ')[2])
+        response = await registration(message.from_user.id, message.text.split(' ')[1], message.text.split(' ')[2])
     except Exception as error:
         if type(error) == IndexError:
             await message.reply("Используйте команду как /auth {username} {password}\n\nusername - ваш логин от журнала\npassword - ваш пароль от журнала\n\nМы сохраняем политику кондефициальности")

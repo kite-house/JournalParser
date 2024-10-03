@@ -29,7 +29,7 @@ async def parserJournal(username: str, password: str) -> dict:
             data['place_flow'] = driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/leader-component/div/div/div[1]/div/div[1]/div/div/div[2]/div[2]/div').text
         except Exception:
             driver.close()
-            return 'Error in web'
+            return 'Ошибка на сервере'
         else:
             driver.close()
             return data

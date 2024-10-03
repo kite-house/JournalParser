@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from models import Base, User
 from parser import parserJournal
 from os import getenv
-
+import asyncio
 
 engine = create_engine(
     url = f'mysql+pymysql://{getenv("DB_USER")}:{getenv("DB_PASSWORD")}@{getenv("DB_HOST")}:{getenv("DB_PORT")}/{getenv("DB_NAME")}',
@@ -14,8 +14,11 @@ session = Session(engine, future = True)
 Base.metadata.create_all(engine)
 
 
-def registration(id: int, username:str, password:str):
-    if type(parserJournal(username, password)) == dict:
+async def registration(id: int, username:str, password:str):
+    result = asyncio.create_task(parserJournal(username, password))
+    await result
+    result = result.result()
+    if type(result) == dict:
         if session.query(User).filter(User.telegram_id == id).first():
             session.query(User).filter(User.telegram_id == id).update({'username': username, 'password': password})
             session.commit()
