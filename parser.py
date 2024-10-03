@@ -1,18 +1,18 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
-
+import asyncio
 base_url = 'https://journal.top-academy.ru/ru'
 
-def parserJournal(username: str, password: str) -> dict:
+async def parserJournal(username: str, password: str) -> dict:
     data = {'homework': {}}
     driver = webdriver.Edge()
     driver.get(base_url)
-    time.sleep(2)
+    await asyncio.sleep(2)
     driver.find_element(By.ID, 'username').send_keys(username)
     driver.find_element(By.ID, 'password').send_keys(password)
     driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/section/div/div/div/div/div[1]/tabset/div/tab[1]/form/button').click()
-    time.sleep(3)
+    await asyncio.sleep(4)
     try:
         driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/section/div/div/div/div/div[1]/tabset/div/tab[1]/form/div[1]/div/div')
     except Exception:
