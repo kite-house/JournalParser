@@ -44,7 +44,7 @@ DB_NAME = ""
 
 
 # JournalParser #ENG
-[EN](https://github.com/kite-house/JournalParser?tab=readme-ov-file#JournalParser-eng)
+[EN](https://github.com/kite-house/JournalParser?tab=readme-ov-file#JournalParser-ru)
 
 > [!IMPORTANT]
 > College journal parser, and sending data in telegrams to a specific user.
