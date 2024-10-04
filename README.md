@@ -1,5 +1,5 @@
 # JournalParser #RU
-[EN](https://github.com/kite-house/QuickMessage?tab=readme-ov-file#JournalParser-eng)
+[EN](https://github.com/kite-house/JournalParser?tab=readme-ov-file#JournalParser-eng)
 
 > [!IMPORTANT]
 > Парсер журнала колледжа, и отправка данных в телеграмм конкретному пользователю.
@@ -44,7 +44,7 @@ DB_NAME = ""
 
 
 # JournalParser #ENG
-[EN](https://github.com/kite-house/QuickMessage?tab=readme-ov-file#JournalParser-eng)
+[EN](https://github.com/kite-house/JournalParser?tab=readme-ov-file#JournalParser-eng)
 
 > [!IMPORTANT]
 > College journal parser, and sending data in telegrams to a specific user.
