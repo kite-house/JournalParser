@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import time
 import asyncio
 base_url = 'https://journal.top-academy.ru/ru'
 
