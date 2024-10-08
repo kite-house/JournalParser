@@ -25,7 +25,7 @@ async def stats(message: types.Message):
     result = result.result()
     try: 
         content = as_list(
-            Bold(f'Статистика - {result['name']}'),
+            Bold(f'Статистика - {result["name"]}'),
             as_key_value('Группа', result['group']),
             as_marked_section(
                 Bold('Успеваемость'),
