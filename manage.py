@@ -23,31 +23,35 @@ async def stats(message: types.Message):
     result = asyncio.create_task(parserJournal(data[0], data[1]))
     await result
     result = result.result()
-    content = as_list(
-        Bold(f'Статистика - {result['name']}'),
-        as_key_value('Группа', result['group']),
-        as_marked_section(
-            Bold('Успеваемость'),
-            as_key_value('Средный балл', result['avg_rating']),
-            as_key_value('Посещаемость', result['avg_attendance']),
-        ),
-        as_marked_section(
-            Bold('Домашнее задание'),
-            as_key_value("Выполнено", result['homework']['done']),
-            as_key_value("Просроченно", result['homework']['overdue']),
-            as_key_value("Текущие", result['homework']['current']),
-            as_key_value("На проверке", result['homework']['verification'])
-        ),
+    try: 
+        content = as_list(
+            Bold(f'Статистика - {result['name']}'),
+            as_key_value('Группа', result['group']),
+            as_marked_section(
+                Bold('Успеваемость'),
+                as_key_value('Средный балл', result['avg_rating']),
+                as_key_value('Посещаемость', result['avg_attendance']),
+            ),
+            as_marked_section(
+                Bold('Домашнее задание'),
+                as_key_value("Выполнено", result['homework']['done']),
+                as_key_value("Просроченно", result['homework']['overdue']),
+                as_key_value("Текущие", result['homework']['current']),
+                as_key_value("На проверке", result['homework']['verification'])
+            ),
 
-        as_marked_section(
-        Bold('Рейтинг'),
-        as_key_value('Место в группе', result['place_group']),
-        as_key_value('Место в потоке', result['place_flow']),
-        ),
-        Bold('Данные получены с https://journal.top-academy.ru/'),
-        sep="\n\n",
-    )
-    await message.reply(**content.as_kwargs())
+            as_marked_section(
+            Bold('Рейтинг'),
+            as_key_value('Место в группе', result['place_group']),
+            as_key_value('Место в потоке', result['place_flow']),
+            ),
+            Bold('Данные получены с https://journal.top-academy.ru/'),
+            sep="\n\n",
+        )
+    except Exception:
+        await message.reply("Возникла ошибка :(")
+    else:
+        await message.reply(**content.as_kwargs())
 
 @dp.message(Command('auth'))
 async def auth(message: types.Message):

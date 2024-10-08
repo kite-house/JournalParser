@@ -1,11 +1,22 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.edge.options import Options
+from selenium.webdriver.edge.service import Service
 import asyncio
+
+
+
 base_url = 'https://journal.top-academy.ru/ru'
+
+service = Service('D:\\JournalParser\\webdriver\\msedgedriver.exe')
+
+options = Options()
+options.add_argument('--headless')
+options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 async def parserJournal(username: str, password: str) -> dict:
     data = {'homework': {}}
-    driver = webdriver.Edge()
+    driver = webdriver.Edge(options=options)
     driver.get(base_url)
     await asyncio.sleep(2)
     driver.find_element(By.ID, 'username').send_keys(username)
@@ -16,6 +27,13 @@ async def parserJournal(username: str, password: str) -> dict:
         driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/section/div/div/div/div/div[1]/tabset/div/tab[1]/form/div[1]/div/div')
     except Exception:
         try:
+            try:
+                driver.find_element(By.XPATH, '/html/body/modal-container/div/div/div/button').click() # Убераем уведомление 
+            except Exception:
+                pass
+
+            await asyncio.sleep(0.5)
+
             data['name'] = driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/div/div[3]/div[1]/top-pane/nav/div[1]/span[2]/span[1]/a').text
             data['group'] = driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/div/div[3]/div[1]/top-pane/nav/div[1]/span[2]/span[2]/span[2]').text
             data['avg_rating'] = driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/progress-component/div/div/div/div/div[2]/div/div/div[1]/span[1]').text
