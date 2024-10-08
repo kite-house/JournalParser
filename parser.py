@@ -8,7 +8,7 @@ import asyncio
 
 base_url = 'https://journal.top-academy.ru/ru'
 
-service = Service('D:\\JournalParser\\webdriver\\msedgedriver.exe')
+service = Service('webdriver/msedgedriver.exe')
 
 options = Options()
 options.add_argument('--headless')
@@ -16,7 +16,7 @@ options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 async def parserJournal(username: str, password: str) -> dict:
     data = {'homework': {}}
-    driver = webdriver.Edge(options=options)
+    driver = webdriver.Edge(options=options, service=service)
     driver.get(base_url)
     await asyncio.sleep(2)
     driver.find_element(By.ID, 'username').send_keys(username)
