@@ -8,7 +8,7 @@ import asyncio
 
 base_url = 'https://journal.top-academy.ru/ru'
 
-service = Service('webdriver/msedgedriver.exe')
+service = Service('webdriver/msedgedriver')
 
 options = Options()
 options.add_argument('--headless')
