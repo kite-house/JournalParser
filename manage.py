@@ -48,7 +48,7 @@ async def stats(message: types.Message):
             Bold('Данные получены с https://journal.top-academy.ru/'),
             sep="\n\n",
         )
-    except Exception:
+    except Exception as error:
         await message.reply("Возникла ошибка :(")
     else:
         await message.reply(**content.as_kwargs())

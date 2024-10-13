@@ -1,22 +1,20 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.edge.options import Options
-from selenium.webdriver.edge.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 import asyncio
-
-
 
 base_url = 'https://journal.top-academy.ru/ru'
 
-service = Service('webdriver/msedgedriver.exe')
-
+service = Service('webdriver/chromedriver')
 options = Options()
-options.add_argument('--headless')
+#options.binary_location = "webdriver/chrome/chrome"
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
+
 
 async def parserJournal(username: str, password: str) -> dict:
     data = {'homework': {}}
-    driver = webdriver.Edge(options=options, service=service)
+    driver = webdriver.Chrome(options=options, service=service)
     driver.get(base_url)
     await asyncio.sleep(2)
     driver.find_element(By.ID, 'username').send_keys(username)
@@ -44,7 +42,8 @@ async def parserJournal(username: str, password: str) -> dict:
             data['homework']['verification'] = driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/div[1]/div/div/div/div[2]/div[2]/div[2]/div[1]/span').text
             data['place_group'] = driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/leader-component/div/div/div[1]/div/div[1]/div/div/div[2]/div[1]/div').text
             data['place_flow'] = driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/leader-component/div/div/div[1]/div/div[1]/div/div/div[2]/div[2]/div').text
-        except Exception:
+        except Exception as error:
+            print(error)
             driver.close()
             return 'Ошибка на сервере'
         else:
