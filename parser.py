@@ -15,9 +15,6 @@ options.add_argument('--disable-dev-shm-usage')
 options.binary_location = "webdriver/chrome/chrome"
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
-driver = webdriver.Chrome(options=options, service=service)
-
-
 async def parserJournal(username: str, password: str) -> dict:
     data = {'homework': {}}
     driver = webdriver.Chrome(options=options, service=service)
