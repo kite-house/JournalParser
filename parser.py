@@ -3,12 +3,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import asyncio
+from pyvirtualdisplay import Display
+
+
+display = Display(visible=0, size=(800, 800))
+display.start()
 
 base_url = 'https://journal.top-academy.ru/ru'
 
 service = Service('webdriver/chromedriver')
 options = Options()
-options.binary_location = "webdriver/chrome/chrome"
+#options.binary_location = "webdriver/chrome/chrome"
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 
