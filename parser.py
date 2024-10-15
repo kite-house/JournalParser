@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+
 import asyncio
 
 base_url = 'https://journal.top-academy.ru/ru'
@@ -10,9 +11,10 @@ base_url = 'https://journal.top-academy.ru/ru'
 service = Service(ChromeDriverManager().install())
 options = Options()
 options.add_argument('--no-sandbox')
-options.add_argument('--headless')
 options.add_argument('--disable-dev-shm-usage')
+#options.binary_location = "webdriver/chrome-win/chrome.exe"
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
+
 
 async def parserJournal(username: str, password: str) -> dict:
     data = {'homework': {}}
