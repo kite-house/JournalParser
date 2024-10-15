@@ -8,7 +8,7 @@ base_url = 'https://journal.top-academy.ru/ru'
 
 service = Service('webdriver/chromedriver')
 options = Options()
-#options.binary_location = "webdriver/chrome/chrome"
+options.binary_location = "webdriver/chrome/chrome"
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 
