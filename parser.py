@@ -3,8 +3,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-
+from pyvirtualdisplay import Display
 import asyncio
+
+display = Display('xvfb',visible=0, size = (1920,1080))
+display.start()
 
 base_url = 'https://journal.top-academy.ru/ru'
 
@@ -14,7 +17,6 @@ options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 #options.binary_location = "webdriver/chrome-win/chrome.exe"
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
-
 
 async def parserJournal(username: str, password: str) -> dict:
     data = {'homework': {}}
