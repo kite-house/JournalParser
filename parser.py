@@ -24,14 +24,14 @@ async def parserJournal(username: str, password: str) -> dict:
     driver = webdriver.Chrome(options=options, service=service)
     driver.get(base_url)
     
-    asyncio.sleep(4)
+    await asyncio.sleep(4)
 
 
     driver.find_element(By.ID, 'username').send_keys(username)
     driver.find_element(By.ID, 'password').send_keys(password)
     driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/section/div/div/div/div/div[1]/tabset/div/tab[1]/form/button').click()
 
-    asyncio.sleep(3)
+    await asyncio.sleep(3)
 
     try:
         driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/section/div/div/div/div/div[1]/tabset/div/tab[1]/form/div[1]/div/div')
@@ -40,7 +40,7 @@ async def parserJournal(username: str, password: str) -> dict:
             try:
                 driver.find_element(By.XPATH, '/html/body/modal-container/div/div/div/button').click() # Убераем уведомление 
             except Exception:
-                asyncio.sleep(1)
+                await asyncio.sleep(1)
 
             data = {'homework': {}}
             data['name'] = driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/div/div[3]/div[1]/top-pane/nav/div[1]/span[2]/span[1]/a').text
