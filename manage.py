@@ -1,6 +1,6 @@
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
-from os import getenv, system
+from os import getenv
 import asyncio
 from aiogram.utils.formatting import Bold, as_list, as_marked_section, as_key_value
 from parser import parserJournal
@@ -70,6 +70,5 @@ async def auth(message: types.Message):
         await message.reply(response)
 
 if __name__ == "__main__":
-    system('clear')
     print('System launch')
     asyncio.run(dp.start_polling(bot))
