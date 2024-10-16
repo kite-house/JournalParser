@@ -3,22 +3,20 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from pyvirtualdisplay import Display
 import asyncio
 
-display = Display()
 base_url = 'https://journal.top-academy.ru/ru'
 
 service = Service(ChromeDriverManager().install())
 options = Options()
+options.add_argument('--window-size=1920,1080')
 options.add_argument('--no-sandbox')
+options.add_argument('--headless')
 options.add_argument('--disable-dev-shm-usage')
 #options.binary_location = "webdriver/chrome-win/chrome.exe"
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 async def parserJournal(username: str, password: str) -> dict:
-    display.start()
-    print('Запущенно:',display.is_alive())
     data = {'homework': {}}
     driver = webdriver.Chrome(options=options, service=service)
     driver.get(base_url)
@@ -49,16 +47,14 @@ async def parserJournal(username: str, password: str) -> dict:
             data['homework']['verification'] = driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/div[1]/div/div/div/div[2]/div[2]/div[2]/div[1]/span').text
             data['place_group'] = driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/leader-component/div/div/div[1]/div/div[1]/div/div/div[2]/div[1]/div').text
             data['place_flow'] = driver.find_element(By.XPATH, '/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/leader-component/div/div/div[1]/div/div[1]/div/div/div[2]/div[2]/div').text
+        
         except Exception as error:
             print(error)
             driver.close()
-            display.stop()
             return 'Ошибка на сервере'
         else:
             driver.close()
-            display.stop()
             return data
     else:
         driver.close()
-        display.stop()
         return 'Authorization error'
