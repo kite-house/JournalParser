@@ -18,6 +18,7 @@ options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 async def parserJournal(username: str, password: str) -> dict:
     display.start()
+    print('Запущенно:',display.is_alive())
     data = {'homework': {}}
     driver = webdriver.Chrome(options=options, service=service)
     driver.get(base_url)
