@@ -6,9 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from pyvirtualdisplay import Display
 import asyncio
 
-display = Display('xvfb',visible=0, size = (1920,1080))
-display.start()
-
+display = Display()
 base_url = 'https://journal.top-academy.ru/ru'
 
 service = Service(ChromeDriverManager().install())
@@ -19,9 +17,11 @@ options.add_argument('--disable-dev-shm-usage')
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 async def parserJournal(username: str, password: str) -> dict:
+    display.start()
     data = {'homework': {}}
     driver = webdriver.Chrome(options=options, service=service)
     driver.get(base_url)
+    driver.implicitly_wait(10)
     await asyncio.sleep(2)
     driver.find_element(By.ID, 'username').send_keys(username)
     driver.find_element(By.ID, 'password').send_keys(password)
@@ -51,10 +51,13 @@ async def parserJournal(username: str, password: str) -> dict:
         except Exception as error:
             print(error)
             driver.close()
+            display.stop()
             return 'Ошибка на сервере'
         else:
             driver.close()
+            display.stop()
             return data
     else:
         driver.close()
+        display.stop()
         return 'Authorization error'
