@@ -15,8 +15,8 @@ options.add_argument('--headless')
 options.add_argument("--disable-extensions")
 options.add_argument('--disable-application-cache')
 options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--disable-gpu') 
-options.add_argument("--incognito")
+options.add_argument('--incognito')
+options.add_argument('--disable-crash-reporter')
 #options.binary_location = "webdriver/chrome-win/chrome.exe"
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
