@@ -19,14 +19,14 @@ async def parserJournal(username: str, password: str) -> dict:
     driver = webdriver.Chrome(options=options, service=service)
     driver.get(URL)
     
-    await asyncio.sleep(4)
+    await asyncio.sleep(15)
 
 
     driver.find_element(By.ID, 'username').send_keys(username)
     driver.find_element(By.ID, 'password').send_keys(password)
     driver.find_element(By.XPATH, BUTTON_AUTH).click()
 
-    await asyncio.sleep(3)
+    await asyncio.sleep(15)
 
     try:
         driver.find_element(By.XPATH, CHECK_ACCESS)
