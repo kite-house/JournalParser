@@ -3,7 +3,7 @@ from aiogram.filters.command import Command
 from os import getenv
 import asyncio
 from aiogram.utils.formatting import Bold, as_list, as_marked_section, as_key_value
-from parser import parserJournal
+from parser.parser import parserJournal
 from auth import registration, authorization
 
 bot = Bot(token=getenv('TELEGRAM_ACCESS_TOKEN'))

@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from models import Base, User
-from parser import parserJournal
+from parser.parser import parserJournal
 from os import getenv
 import asyncio
 
