@@ -18,15 +18,17 @@ options.add_experimental_option("excludeSwitches", ["enable-logging"])
 async def parserJournal(username: str, password: str) -> dict:
     driver = webdriver.Chrome(options=options, service=service)
     driver.get(URL)
-    
-    await asyncio.sleep(15)
+
+    await asyncio.sleep(10)
 
 
     driver.find_element(By.ID, 'username').send_keys(username)
     driver.find_element(By.ID, 'password').send_keys(password)
     driver.find_element(By.XPATH, BUTTON_AUTH).click()
 
-    await asyncio.sleep(15)
+    print('auth succes!')
+
+    await asyncio.sleep(10)
 
     try:
         driver.find_element(By.XPATH, CHECK_ACCESS)
@@ -36,6 +38,8 @@ async def parserJournal(username: str, password: str) -> dict:
                 driver.find_element(By.XPATH, NOTIFICATION).click() # Убераем уведомление 
             except Exception:
                 await asyncio.sleep(1)
+
+            print('start parsing...')
 
             data = {'homework': {}}
             data['name'] = driver.find_element(By.XPATH, NAME).text
@@ -48,7 +52,7 @@ async def parserJournal(username: str, password: str) -> dict:
             data['homework']['verification'] = driver.find_element(By.XPATH, HOMEWORK_VERIFICATION).text
             data['place_group'] = driver.find_element(By.XPATH, PLACE_GROUP).text
             data['place_flow'] = driver.find_element(By.XPATH, PLACE_FLOW).text
-        
+
         except Exception as error:
             print(error)
             driver.quit()
