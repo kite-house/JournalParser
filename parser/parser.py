@@ -16,14 +16,19 @@ options.add_argument('--disable-dev-shm-usage')
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 async def parserJournal(username: str, password: str) -> dict:
+    print('starting browser...')
     driver = webdriver.Chrome(options=options, service=service)
     driver.get(URL)
+    print('start browser!')
 
     await asyncio.sleep(10)
 
+    print('auth start...')
 
     driver.find_element(By.ID, 'username').send_keys(username)
+    print('succes send username!')
     driver.find_element(By.ID, 'password').send_keys(password)
+    print('succes send password!')
     driver.find_element(By.XPATH, BUTTON_AUTH).click()
 
     print('auth succes!')
