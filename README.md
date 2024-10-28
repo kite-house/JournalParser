@@ -16,6 +16,7 @@ DB_PASSWORD = ""
 DB_HOST = ""
 DB_PORT = ""
 DB_NAME = ""
+CRYPTO_KEY = "Ключ для шифрование"
 ```
 
 ### Описание
@@ -60,7 +61,8 @@ DB_USER = ""
 DB_PASSWORD = ""
 DB_HOST = ""
 DB_PORT = ""
-DB_NAME =" "
+DB_NAME = ""
+CRYPTO_KEY = ""Key for encryption"
 ```
 
 ### Description
