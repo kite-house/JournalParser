@@ -7,13 +7,13 @@ import json
 import asyncio
 import logging
 
-service = Service('D:/JournalParser/webdriver/chromedriver.exe')
+service = Service(ChromeDriverManager().install())
 options = Options()
 options.add_argument('--window-size=1920,1080')
 options.add_argument('--no-sandbox')
 options.add_argument('--headless')
 options.add_argument('--disable-dev-shm-usage')
-options.binary_location = "webdriver/chrome-win/chrome.exe"
+#options.binary_location = "webdriver/chrome-win/chrome.exe"
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 with open('parser/config.json', "r") as file:
