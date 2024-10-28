@@ -7,7 +7,7 @@ class Base(DeclarativeBase):
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    telegram_id = Column(Integer, default= False, nullable= False)
+    telegram_id = Column(String(150), default= False, nullable= False)
     username = Column(String(150), default= False, nullable= False)
     password = Column(String(150), default= False, nullable= False)
 

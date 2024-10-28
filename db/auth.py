@@ -1,7 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-from models import Base, User
+from db.models import Base, User
 from parser.parser import parserJournal
+from cryptography.fernet import Fernet
 from os import getenv
 import asyncio
 
@@ -11,29 +12,31 @@ engine = create_engine(
 )
 
 session = Session(engine, future = True)
+fernet = Fernet(getenv('CRYPTO_KEY'))
+
+#Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
 
 
 async def registration(id: int, username:str, password:str):
-    result = asyncio.create_task(parserJournal(username, password))
-    await result
-    result = result.result()
-    if type(result) == dict:
+    response = await asyncio.create_task(parserJournal(username, password))
+
+    if type(response) == dict:
         if session.query(User).filter(User.telegram_id == id).first():
-            session.query(User).filter(User.telegram_id == id).update({'username': username, 'password': password})
+            session.query(User).filter(User.telegram_id == id).update({'username': username, 'password': fernet.encrypt(bytes(password, 'utf-8'))})
             session.commit()
             return 'Данные успешно обновленны!'
         else:
-            user = User(telegram_id = id, username = username, password = password)
+            user = User(telegram_id = id, username = username, password = fernet.encrypt(bytes(password, 'utf-8')))
             session.add(user)
             session.commit()
 
     else:
         return 'Некоректный логин или пароль!'
     
-    
     return 'Регистрация прошла успешно!'
 
 
 def authorization(id):
-    return session.query(User.username, User.password).filter(User.telegram_id == id).first()
+    username, password = session.query(User.username, User.password).filter(User.telegram_id == id).first()
+    return username, str(fernet.decrypt(password), 'utf-8')

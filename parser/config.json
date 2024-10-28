@@ -1,0 +1,22 @@
+{
+    "URL": "https://journal.top-academy.ru/ru",
+    "ENDPOINTS" : {
+        "name" : "/html/body/mystat/ng-component/ng-component/div/div[3]/div[1]/top-pane/nav/div[1]/span[2]/span[1]/a",
+        "group" : "/html/body/mystat/ng-component/ng-component/div/div[3]/div[1]/top-pane/nav/div[1]/span[2]/span[2]/span[2]",
+        "avg_rating" : "/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/progress-component/div/div/div/div/div[2]/div/div/div[1]/span[1]",
+        "avg_attendance" : "/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/attendance-component/div/div/div/div/div[2]/div/div/div[1]/span[1]",
+        "homework_done" : "/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/div[1]/div/div/div/div[2]/div[2]/div[1]/div[2]/span",
+        "homework_overdue" : "/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/div[1]/div/div/div/div[2]/div[2]/div[2]/div[2]/span",
+        "homework_current" : "/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/div[1]/div/div/div/div[2]/div[2]/div[1]/div[1]/span",
+        "homework_verification" : "/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/div[1]/div/div/div/div[2]/div[2]/div[2]/div[1]/span",
+        "place_group" : "/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/leader-component/div/div/div[1]/div/div[1]/div/div/div[2]/div[1]/div",
+        "place_flow" : "/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/div/div/leader-component/div/div/div[1]/div/div[1]/div/div/div[2]/div[2]/div"
+    },
+    "PREP" : {
+        "username" : "username",
+        "password" : "password",
+        "button_auth" : "/html/body/mystat/ng-component/ng-component/section/div/div/div/div/div[1]/tabset/div/tab[1]/form/button",
+        "check_access" : "/html/body/mystat/ng-component/ng-component/section/div/div/div/div/div[1]/tabset/div/tab[1]/form/div[1]/div/div",
+        "notification" : "/html/body/modal-container/div/div/div/button"
+    }
+}

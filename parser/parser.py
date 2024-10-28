@@ -3,58 +3,48 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from parser.settings import *
+import json
 import asyncio
 
-service = Service(ChromeDriverManager().install())
+service = Service('D:/JournalParser/webdriver/chromedriver.exe')
 options = Options()
 options.add_argument('--window-size=1920,1080')
 options.add_argument('--no-sandbox')
 options.add_argument('--headless')
 options.add_argument('--disable-dev-shm-usage')
-#options.binary_location = "webdriver/chrome-win/chrome.exe"
+options.binary_location = "webdriver/chrome-win/chrome.exe"
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
+
+with open('parser/config.json', "r") as file:
+        URL, ENDPOINTS, PREP = json.load(file).values()
 
 async def parserJournal(username: str, password: str) -> dict:
     driver = webdriver.Chrome(options=options, service=service)
-    driver.get(URL)
-
-    await asyncio.sleep(10)
-
-    driver.find_element(By.ID, 'username').send_keys(username)
-    driver.find_element(By.ID, 'password').send_keys(password)
-    driver.find_element(By.XPATH, BUTTON_AUTH).click()
-
-    await asyncio.sleep(10)
-
     try:
-        driver.find_element(By.XPATH, CHECK_ACCESS)
-    except Exception:
+        driver.get(URL)
+        await asyncio.sleep(5)
+
+        driver.find_element(By.ID, PREP['username']).send_keys(username)
+        driver.find_element(By.ID, PREP['password']).send_keys(password)
+        driver.find_element(By.XPATH, PREP['button_auth']).click()
+        await asyncio.sleep(5)
+
         try:
-            try:
-                driver.find_element(By.XPATH, NOTIFICATION).click() # Убераем уведомление 
-            except Exception:
-                await asyncio.sleep(1)
-
-            data = {'homework': {}}
-            data['name'] = driver.find_element(By.XPATH, NAME).text
-            data['group'] = driver.find_element(By.XPATH, GROUP).text
-            data['avg_rating'] = driver.find_element(By.XPATH, AVG_RATING).text
-            data['avg_attendance'] = driver.find_element(By.XPATH, AVG_ATTENDANCE).text
-            data['homework']['done'] = driver.find_element(By.XPATH, HOMEWORK_DONE).text
-            data['homework']['overdue'] = driver.find_element(By.XPATH, HOMEWORK_OVERDUE).text
-            data['homework']['current'] = driver.find_element(By.XPATH, HOMEWORK_CURRENT).text
-            data['homework']['verification'] = driver.find_element(By.XPATH, HOMEWORK_VERIFICATION).text
-            data['place_group'] = driver.find_element(By.XPATH, PLACE_GROUP).text
-            data['place_flow'] = driver.find_element(By.XPATH, PLACE_FLOW).text
-
-        except Exception as error:
-            print(error)
-            driver.quit()
-            return 'Ошибка на сервере'
+            driver.find_element(By.XPATH, PREP['check_access'])
+        except Exception:
+            pass
         else:
-            driver.quit()
-            return data
-    else:
+            raise SystemError('Не удалось авторизоваться!') 
+        
+        try:
+            driver.find_element(By.XPATH, PREP['notification']).click()
+        except Exception:
+            await asyncio.sleep(1)
+
+        return {key: driver.find_element(By.XPATH, xpath).text for key, xpath in ENDPOINTS.items()}
+    
+    except Exception as error:
+        return str(error)
+    
+    finally:
         driver.quit()
-        return 'Authorization error'
