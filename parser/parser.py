@@ -26,7 +26,7 @@ async def parserJournal(username: str, password: str) -> dict:
         await asyncio.sleep(10)
 
         driver.find_element(By.ID, PREP['username']).send_keys(username)
-        driver.find_element(By.ID, PREP['passworssd']).send_keys(password)
+        driver.find_element(By.ID, PREP['password']).send_keys(password)
         driver.find_element(By.XPATH, PREP['button_auth']).click()
         await asyncio.sleep(10)
 
@@ -50,3 +50,6 @@ async def parserJournal(username: str, password: str) -> dict:
     
     finally:
         driver.quit()
+
+
+
