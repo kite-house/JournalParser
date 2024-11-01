@@ -4,6 +4,7 @@ from db.models import Base, User
 from parser.parser import parserJournal
 from cryptography.fernet import Fernet
 from os import getenv
+from datetime import datetime
 import asyncio
 
 engine = create_engine(
@@ -23,11 +24,19 @@ async def registration(id: int, username:str, password:str):
 
     if type(response) == dict:
         if session.query(User).filter(User.telegram_id == id).first():
-            session.query(User).filter(User.telegram_id == id).update({'username': username, 'password': fernet.encrypt(bytes(password, 'utf-8'))})
+            session.query(User).filter(User.telegram_id == id).update({
+                    'username': username, 
+                    'password': fernet.encrypt(bytes(password, 'utf-8'))
+                    }
+                )
             session.commit()
             return 'Данные успешно обновленны!'
         else:
-            user = User(telegram_id = id, username = username, password = fernet.encrypt(bytes(password, 'utf-8')))
+            user = User(telegram_id = id, 
+                        username = username, 
+                        password = fernet.encrypt(bytes(password, 'utf-8')),
+                        date_created = datetime.now().date()
+                        )
             session.add(user)
             session.commit()
 

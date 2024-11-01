@@ -53,17 +53,19 @@ async def stats(message: types.Message):
 
 @dp.message(Command('auth'))
 async def auth(message: types.Message):
-    bot_message = await message.reply("Идёт регистрация..")
     if message.chat.type != "private":
-        return await bot_message.edit_text("Для прохождение регистрации, перейдите в личные сообщение со мной!")
+        return await message.reply("Для прохождение регистрации, перейдите в личные сообщение со мной!")
+
+    id, username, password = message.from_user.id, *message.text.split(' ')[1:3]
+    message = await message.reply("Идёт регистрация..")
 
     try:
-        response = await registration(message.from_user.id, message.text.split(' ')[1], message.text.split(' ')[2])
+        response = await registration(id, username, password)
     except IndexError:
-        return await bot_message.edit_text("Используйте команду как /auth {username} {password}"
+        return await message.edit_text("Используйте команду как /auth {username} {password}"
                                    "\n\n"
                                    "username - ваш логин от журнала\npassword - ваш пароль от журнала"
                                    "\n\n"
                                    "Мы сохраняем политику кондефициальности")
 
-    await bot_message.edit_text(response)
+    await message.edit_text(response)

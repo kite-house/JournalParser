@@ -1,5 +1,5 @@
 from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Date
 
 class Base(DeclarativeBase):
     pass
@@ -10,4 +10,4 @@ class User(Base):
     telegram_id = Column(String(150), default= False, nullable= False)
     username = Column(String(150), default= False, nullable= False)
     password = Column(String(150), default= False, nullable= False)
-
+    date_created = Column(Date)

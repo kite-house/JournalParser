@@ -2,10 +2,11 @@ FROM python:3.12.7
 
 WORKDIR /app
 
-COPY . /app
+COPY requirements.txt /app
 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
+COPY . /app
 
 RUN apt-get update && apt-get install -y wget unzip && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &&\
@@ -13,4 +14,7 @@ RUN apt-get update && apt-get install -y wget unzip && \
     rm google-chrome-stable_current_amd64.deb && \
     apt-get clean
 
-CMD ["python", "manage.py"]
+ENTRYPOINT [ "python" ]
+
+CMD ["manage.py"]
+
