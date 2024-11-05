@@ -2,8 +2,9 @@ from aiogram import Dispatcher, types
 from aiogram.filters.command import Command
 import asyncio
 from aiogram.utils.formatting import Bold, as_list, as_marked_section, as_key_value
-from parser.parser import parserJournal, parserSchedule
+from parser.parser import parserJournal, parserSchedule, URL
 from db.auth import registration, authorization
+from src.anti_spam import timeout
 
 dp = Dispatcher()
 
@@ -15,6 +16,9 @@ async def startMessage(message: types.Message):
 
 @dp.message(Command('stats'))
 async def stats(message: types.Message):
+    if timeout(message.from_user.id) == False:
+        return await message.reply('Слишком часто!')
+    
     try:
         username, password = authorization(message.from_user.id)
     except TypeError:
@@ -47,7 +51,7 @@ async def stats(message: types.Message):
             as_key_value('Место в группе', response['place_group']),
             as_key_value('Место в потоке', response['place_flow']),
         ),
-        Bold('Данные получены с https://journal.top-academy.ru/'),
+        Bold(f'Данные получены с {URL}'),
         sep="\n\n",
     )
 
@@ -56,6 +60,9 @@ async def stats(message: types.Message):
 
 @dp.message(Command('schedule'))
 async def schedule(message: types.Message):
+    if timeout(message.from_user.id) == False:
+        return await message.reply('Слишком часто!')
+
     try:
         username, password = authorization(message.from_user.id)
     except TypeError:
@@ -70,10 +77,11 @@ async def schedule(message: types.Message):
 
     content = as_list(
         as_marked_section(
-            Bold('Расписание\n'),
+            Bold('Расписание'),
             f'{"\n".join(f'\n{str(key)}\n • {"\n • ".join(list(value.values()))}' for key, value in response.items())}',
+            marker=''
         ),
-        Bold('Данные получены с https://journal.top-academy.ru/'),
+        Bold(f'Данные получены с {URL}'),
         sep="\n\n",
     )
     await message.edit_text(**content.as_kwargs())
@@ -83,8 +91,7 @@ async def auth(message: types.Message):
     if message.chat.type != "private":
         return await message.reply("Для прохождение регистрации, перейдите в личные сообщение со мной!")
 
-    id, username, password = message.from_user.id, * \
-        message.text.split(' ')[1:3]
+    id, username, password = message.from_user.id, *message.text.split(' ')[1:3]
     message = await message.reply("Идёт регистрация..")
 
     try:
