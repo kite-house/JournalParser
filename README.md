@@ -29,7 +29,7 @@ CRYPTO_KEY = "Ключ для шифрование"
 
 > После перехода в личные сообщение и вызова /auth {username} {password}, мы проверяем корректны ли данные, если да то отправляем статус запроса, и сохраняем в базу данных.
  
-> После регистрации, команда /stats становится доступной, при её вызове мы получаем нужные данные из БД, и парсер данные с сайта. 
+> После регистрации, команда /stats и /schedule становится доступными, при их вызове мы получаем нужные данные из БД, и парсим данные с сайта. 
 
 ### Доступные командыы
 
@@ -42,7 +42,8 @@ CRYPTO_KEY = "Ключ для шифрование"
 > [!TIP]
 > /stats - Вывод статистики.
 
-
+> [!TIP]
+> /schedule - Вывод расписание.
 
 # JournalParser #ENG
 [EN](https://github.com/kite-house/JournalParser?tab=readme-ov-file#JournalParser-ru)
@@ -87,4 +88,9 @@ A log parser that sends registered user statistics to their training.
 
 > [!TIP]
 > /stats - Statistics output.
+
+> [!TIP]
+> /schedule - Schedule output.
+
+
 
