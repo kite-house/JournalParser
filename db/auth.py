@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from db.models import Base, User
-from parser.parser import parserJournal
+from parser.parser import auth as check_auth
 from cryptography.fernet import Fernet
 from os import getenv
 from datetime import datetime
@@ -20,9 +20,9 @@ Base.metadata.create_all(engine)
 
 
 async def registration(id: int, username:str, password:str):
-    response = await asyncio.create_task(parserJournal(username, password))
+    response = await asyncio.create_task(check_auth(username, password))
 
-    if type(response) == dict:
+    if response == 'successfully authorizate':
         if session.query(User).filter(User.telegram_id == id).first():
             session.query(User).filter(User.telegram_id == id).update({
                     'username': username, 

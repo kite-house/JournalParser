@@ -18,5 +18,9 @@
         "button_auth" : "/html/body/mystat/ng-component/ng-component/section/div/div/div/div/div[1]/tabset/div/tab[1]/form/button",
         "check_access" : "/html/body/mystat/ng-component/ng-component/section/div/div/div/div/div[1]/tabset/div/tab[1]/form/div[1]/div/div",
         "notification" : "/html/body/modal-container/div/div/div/button"
+    },
+    "SCHED": {
+        "selected_day": "/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/ng-component/div/div/div[2]/div/div[1]/button[3]",
+        "schedule": "/html/body/mystat/ng-component/ng-component/div/div[3]/div[2]/ng-component/ng-component/div/div/div[2]/div/div[2]/div/div[3]"
     }
 }
